@@ -2,7 +2,12 @@ import streamlit as st
 from dotenv import load_dotenv
 from src.helper import download_hugging_face_embeddings
 from src.prompt import system_prompt
-from src.audio_helper import audio_to_text_mic, text_to_audio
+try:
+    from src.audio_helper import audio_to_text_mic, text_to_audio
+    AUDIO_ENABLED = True
+except Exception as e:
+    AUDIO_ENABLED = False
+    print(f"Audio features disabled: {e}")
 
 from langchain_community.vectorstores import FAISS
 from langchain_groq import ChatGroq
