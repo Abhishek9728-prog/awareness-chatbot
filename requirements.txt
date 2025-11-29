@@ -1,0 +1,14 @@
+streamlit==1.31.0
+python-dotenv==1.0.0
+langchain==0.3.13
+langchain-community==0.3.13
+langchain-groq==0.2.1
+faiss-cpu==1.7.4
+sentence-transformers==2.3.1
+PyPDF2==3.0.1
+pypdf==3.17.4
+sounddevice==0.4.6
+scipy==1.11.4
+SpeechRecognition==3.10.1
+gTTS==2.5.0
+numpy==1.24.3
