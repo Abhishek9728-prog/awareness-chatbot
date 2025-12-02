@@ -17,17 +17,12 @@ PHONE_NUMBER_ID = os.getenv("WHATSAPP_PHONE_NUMBER_ID")
 
 @app.get("/webhook")
 async def verify_webhook(request: Request):
-    """
-    This endpoint is called by Meta once when you configure the webhook.
-    It checks that the callback URL is valid.
-    """
     params = request.query_params
     mode = params.get("hub.mode")
     token = params.get("hub.verify_token")
     challenge = params.get("hub.challenge")
 
     if mode == "subscribe" and token == VERIFY_TOKEN:
-        # Meta expects you to return the challenge if the token matches
         return PlainTextResponse(challenge)
 
     return PlainTextResponse("Verification failed", status_code=403)
@@ -35,23 +30,17 @@ async def verify_webhook(request: Request):
 
 @app.post("/webhook")
 async def receive_message(request: Request):
-    """
-    This endpoint receives all WhatsApp messages.
-    We read the text, run a simple spam/fraud check,
-    and send a reply back to the same number.
-    """
     data = await request.json()
     print("📩 Incoming webhook:", data)
 
     try:
-        # Navigate to the message text and sender number
         entry = data["entry"][0]
         changes = entry["changes"][0]
         value = changes["value"]
 
         if "messages" in value:
             message = value["messages"][0]
-            from_number = message["from"]                    # e.g. "91xxxxxxxxxx"
+            from_number = message["from"]  # FIXED
             text = message.get("text", {}).get("body", "")
 
             print(f"Message from {from_number}: {text}")
@@ -69,10 +58,6 @@ async def receive_message(request: Request):
 
 
 def check_spam(text: str) -> str:
-    """
-    Very simple rule-based spam check.
-    You can replace this later with your real model / RAG.
-    """
     suspicious_keywords = [
         "lottery", "win money", "prize", "jackpot", "free gift",
         "click link", "click here", "upi", "otp", "kbc", "verification code"
@@ -93,9 +78,6 @@ def check_spam(text: str) -> str:
 
 
 def send_whatsapp_message(to: str, text: str):
-    """
-    Use WhatsApp Cloud API to send a message.
-    """
     url = f"https://graph.facebook.com/v21.0/{PHONE_NUMBER_ID}/messages"
 
     headers = {
