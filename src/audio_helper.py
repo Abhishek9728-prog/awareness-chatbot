@@ -6,7 +6,7 @@ from gtts import gTTS
 from pathlib import Path
 
 
-def audio_to_text_mic(duration: int = 5, samplerate: int = 16000) -> str:
+def audio_to_text_mic(duration: int = 30, samplerate: int = 16000) -> str:
     recognizer = sr.Recognizer()
     print(f"🎙️ Recording... please speak clearly for {duration} seconds")
 
@@ -33,7 +33,6 @@ def audio_to_text_mic(duration: int = 5, samplerate: int = 16000) -> str:
 
 
 def text_to_audio(text: str) -> Path:
-    """Convert chatbot reply text to an audio file (MP3)."""
     tts = gTTS(text)
     temp_path = Path(tempfile.gettempdir()) / "bot_reply.mp3"
     tts.save(str(temp_path))

@@ -14,3 +14,6 @@ gTTS==2.5.0
 numpy>=1.25.0
 groq
 langchain-google-genai
+fastapi
+uvicorn
+requests
