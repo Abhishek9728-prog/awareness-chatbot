@@ -3,10 +3,19 @@ services:
     name: whatsapp-webhook
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand:startCommand: uvicorn webhook:app --host 0.0.0.0 --port 10000
+    startCommand:startCommand: uvicorn whatsapp_webhook:app --host 0.0.0.0 --port 10000
     plan: free
     envVars:
       - key: WHATSAPP_PHONE_NUMBER_ID
         value: 831503680056024
       - key: VERIFY_TOKEN
         value: abhishek_verify_123
+      - key: WHATSAPP_ACCESS_TOKEN
+        value: EAAU4ZAhjZC6joBQKmVCGHfpT1yD2lql6WUOd7bZC16G16aaWdJoy6TObfTCsxV0QA4vxFGnAQf3Tvd4BDkPvA9829cLuisfDL8AeohxEk8cXsobhoqOZCCjewPZChdXMYzZAAS2JDMEvPzgrwtkjfagyu89KRySXYttzzPRCygZBKWCjO3r9YhKoOswWSF1fkRNILNVoVNYn08i94BOBSIyGm6PV7UgXQW3coOMu2a5M39g6NzTe8ZA6C937tDZCTXSNxEh1QmJr4qcLUmw4AWZBGn0KYZD
+
+    -type : web
+    name: fraud-chatbot-ui
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run app.py --server.port 10000 --server.address 0.0.0.0
