@@ -3,7 +3,7 @@ services:
     name: whatsapp-webhook
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn whatsapp_webhook:app --host 0.0.0.0 --port 10000
+    startCommand:startCommand: uvicorn webhook:app --host 0.0.0.0 --port 10000
     plan: free
     envVars:
       - key: WHATSAPP_PHONE_NUMBER_ID
